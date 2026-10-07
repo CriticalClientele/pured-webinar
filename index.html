@@ -406,6 +406,8 @@ details[open] .faq-icon{transform:rotate(45deg);}
       phone_country: phoneCountry,
       // "OK to text" allowlist tag: US/CA number AND ticked SMS consent. SMS blasts target only this tag.
       sms_tag: consent && ['US', 'CA'].includes(phoneCountry) ? 'sms-ok' : '',
+      // Country tag for every registrant (matches the tags on cleaned-up older contacts).
+      country_tag: ['US', 'CA'].includes(phoneCountry) ? 'us-ca' : 'international',
       sms_consent: consent ? 'yes' : 'no',
       sms_consent_text: consent ? CONSENT_TEXT : '',
       consent_version: '2026-10-v2',
