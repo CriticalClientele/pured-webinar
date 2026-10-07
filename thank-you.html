@@ -162,8 +162,6 @@
     <!-- /GIVEAWAY -->
   </ol>
 
-  <a class="btn bigcta" id="discord" href="#discord-link-needed">Join the Discord</a>
-  <p class="micro">Free, and quick if you already have Discord.</p>
 
   <div class="mocks">
     <div class="mock-wrap">
@@ -235,10 +233,8 @@
   }
 
   if (DISCORD_URL) {
-    for (const id of ['discord', 'discord-step']) {
-      const d = document.getElementById(id);
-      d.href = DISCORD_URL; d.target = '_blank'; d.rel = 'noopener';
-    }
+    const d = document.getElementById('discord-step');
+    d.href = DISCORD_URL; d.target = '_blank'; d.rel = 'noopener';
   }
 
   const cal = document.getElementById('addevent');
