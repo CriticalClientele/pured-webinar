@@ -396,13 +396,16 @@ details[open] .faq-icon{transform:rotate(45deg);}
     submitBtn.classList.add('opacity-60');
 
     const consent = form.sms_consent.checked;
+    const phoneCountry = (iti.getSelectedCountryData().iso2 || '').toUpperCase();
     const data = new URLSearchParams({
       full_name: fullName,
       first_name: nameParts[0],
       last_name: nameParts.slice(1).join(' '),
       email: form.email.value.trim().toLowerCase(),
       phone: phone,
-      phone_country: (iti.getSelectedCountryData().iso2 || '').toUpperCase(),
+      phone_country: phoneCountry,
+      // "OK to text" allowlist tag: US/CA number AND ticked SMS consent. SMS blasts target only this tag.
+      sms_tag: consent && ['US', 'CA'].includes(phoneCountry) ? 'sms-ok' : '',
       sms_consent: consent ? 'yes' : 'no',
       sms_consent_text: consent ? CONSENT_TEXT : '',
       consent_version: '2026-10-v2',
