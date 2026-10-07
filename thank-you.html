@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- DO NOT DEPLOY until DAY_DATE_TEXT, DISCORD_URL, rules link and [PRIZE] are filled. -->
+<!-- DO NOT DEPLOY until DAY_DATE_TEXT, SMS_DATE_TEXT, ADDEVENT_URL, DISCORD_URL, rules link and [PRIZE] are filled. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -138,8 +138,7 @@
         <h2>Add it to your calendar.</h2>
         <p>So you don't miss it. Your seat is already saved.</p>
         <div class="btns">
-          <a class="btn" id="gcal" href="#" target="_blank" rel="noopener">Google Calendar</a>
-          <button class="btn ghost" id="ics" type="button">Apple / Outlook</button>
+          <a class="btn" id="addevent" href="#" target="_blank" rel="noopener">Add to Calendar</a>
         </div>
         <p class="soon" id="cal-soon" hidden>Calendar link coming soon</p>
       </div>
@@ -164,10 +163,6 @@
     <!-- /GIVEAWAY -->
   </ol>
 
-  <!-- GIVEAWAY -->
-  <p class="legal-line">No purchase necessary. Open to US residents 18+. Void where prohibited. Must be live to win. See <a href="#rules-link-needed" id="rules-link">Official Rules</a> for details and the free alternate way to enter.</p>
-  <!-- /GIVEAWAY -->
-
   <a class="btn bigcta" id="discord" href="#discord-link-needed">Join the Discord</a>
   <p class="micro">Free, and quick if you already have Discord.</p>
 
@@ -178,7 +173,7 @@
         <div class="phone-in">
           <div class="p-status"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
           <div class="p-head"><div class="avatar">P</div><small>Pured Media</small></div>
-          <div class="bubble">Pured Media: Hi Jennifer, your seat is saved for Max's live class <span class="day-date-comma">[DAY_DATE], [TIME]</span>. Link is in your email. You'll get 3 class reminders. Msg&amp;data rates may apply. Reply HELP for help, STOP to opt out.</div>
+          <div class="bubble">Pured Media: Hi Jane, your seat is saved for Max's live class <span class="sms-date">Oct 23, 2026 at [TIME]</span>. Link is in your email.</div>
         </div>
       </div>
     </div>
@@ -190,7 +185,7 @@
           <div class="subject">You're in. Here is your link for my free class <span class="tag">Inbox</span></div>
           <div class="from"><div class="avatar">M</div><div>Max, Pured Media<small>to me</small></div></div>
           <div class="mail-body">
-            <b class="big">YOU'RE IN, Jennifer!</b>
+            <b class="big">YOU'RE IN, Jane!</b>
             Your seat is saved for my free live masterclass:<br>
             <b>How to Get Paid by Brands to Make Videos From Your Phone</b>
           </div>
@@ -222,17 +217,15 @@
 </footer>
 <script>
   // Fill these in once the details are set.
-  const YOUTUBE_URL = '';          // e.g. 'https://youtube.com/live/abc123'
-  const START_UTC = '';            // e.g. '2026-10-23T23:00:00Z' (6:00 PM CT = 23:00 UTC in October). Empty = calendar buttons show disabled.
-  const DAY_DATE_TEXT = '[DAY_DATE] · [TIME]';   // single source for the date/time on the page, e.g. 'Friday, October 23 · 6:00 PM CT'
+  const ADDEVENT_URL = '';         // AddEvent event link. Empty = calendar button shows disabled.
+  const DAY_DATE_TEXT = '[DAY_DATE] · [TIME]';   // event strip, e.g. 'Friday, October 23 · 7:00 PM CT'
+  const SMS_DATE_TEXT = 'Oct 23, 2026 at [TIME]'; // phone mockup, must match the real confirmation text
   const DISCORD_URL = '';          // e.g. 'https://discord.gg/xxxx'. Empty = button goes to #discord-link-needed
-  const LENGTH_MIN = 90;
-  const TITLE = 'Free Live Masterclass with Max (Pured Media)';
 
   document.querySelectorAll('.day-date').forEach((el) => { el.textContent = DAY_DATE_TEXT; });
-  document.querySelectorAll('.day-date-comma').forEach((el) => { el.textContent = DAY_DATE_TEXT.replace(' · ', ', '); });
+  document.querySelectorAll('.sms-date').forEach((el) => { el.textContent = SMS_DATE_TEXT; });
 
-  if (DAY_DATE_TEXT.includes('[') || !DISCORD_URL) console.warn('thank-you: placeholders not filled');
+  if (DAY_DATE_TEXT.includes('[') || SMS_DATE_TEXT.includes('[') || !DISCORD_URL || !ADDEVENT_URL) console.warn('thank-you: placeholders not filled');
 
   // Greet by first name if the form passed it (?n=Caiden).
   const name = new URLSearchParams(location.search).get('n');
@@ -245,33 +238,12 @@
     }
   }
 
-  if (START_UTC) {
-    const start = new Date(START_UTC);
-    const end = new Date(start.getTime() + LENGTH_MIN * 60000);
-    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const details = 'Live on YouTube' + (YOUTUBE_URL ? ': ' + YOUTUBE_URL : '. The link is in your confirmation email.');
-    document.getElementById('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-      + '&text=' + encodeURIComponent(TITLE)
-      + '&dates=' + fmt(start) + '/' + fmt(end)
-      + '&details=' + encodeURIComponent(details)
-      + '&location=' + encodeURIComponent(YOUTUBE_URL || 'YouTube Live');
-    document.getElementById('ics').addEventListener('click', () => {
-      const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Pured Media//Masterclass//EN', 'BEGIN:VEVENT',
-        'UID:masterclass-' + fmt(start) + '@puredmedia.com', 'DTSTAMP:' + fmt(new Date()),
-        'DTSTART:' + fmt(start), 'DTEND:' + fmt(end), 'SUMMARY:' + TITLE,
-        'DESCRIPTION:' + details, 'LOCATION:' + (YOUTUBE_URL || 'YouTube Live'),
-        'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY', 'DESCRIPTION:Masterclass starts in 30 minutes', 'END:VALARM',
-        'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
-      a.download = 'pured-media-masterclass.ics';
-      a.click();
-    });
+  const cal = document.getElementById('addevent');
+  if (ADDEVENT_URL) {
+    cal.href = ADDEVENT_URL;
   } else {
-    // Keep step 1 visible (steps are numbered 1-2-3) but disable the buttons.
-    const g = document.getElementById('gcal');
-    g.removeAttribute('href'); g.removeAttribute('target'); g.setAttribute('aria-disabled', 'true'); g.setAttribute('role', 'link');
-    document.getElementById('ics').disabled = true;
+    // Keep step 1 visible (steps are numbered 1-2-3) but disable the button.
+    cal.removeAttribute('href'); cal.removeAttribute('target'); cal.setAttribute('aria-disabled', 'true'); cal.setAttribute('role', 'link');
     document.getElementById('cal-soon').hidden = false;
   }
 </script>
