@@ -314,8 +314,8 @@ details[open] .faq-icon{transform:rotate(45deg);}
 
   // Zapier Catch Hook ("Webinar Oct 23 Registration" Zap): fans out to GHL contact + Kit tag.
   const WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/26178687/4m74ev2/';
-  // Optional: thank-you page. Leave '' to show the inline success message instead.
-  const THANK_YOU_URL = '';
+  // Confirmation page; gets the first name as ?n= so it can greet them.
+  const THANK_YOU_URL = 'thank-you.html';
   const CONSENT_TEXT = document.querySelector('label[for="sms-consent"]').textContent.trim();
 
   // Phone: country picker + real number-format check (libphonenumber via intl-tel-input). Defaults to US.
@@ -433,7 +433,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
     }
 
     if (THANK_YOU_URL) {
-      location.href = THANK_YOU_URL;
+      location.href = THANK_YOU_URL + '?n=' + encodeURIComponent(nameParts[0]);
     } else {
       drawer.classList.remove('open');
       drawer.style.display = 'none';

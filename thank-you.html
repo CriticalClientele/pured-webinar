@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>You're In | Pured Media Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pages.css">
+<style>
+  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px; background: #1e1b19; color: #f2b136; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; }
+  .event { background: #1e1b19; color: #fff9ee; border-radius: 12px; padding: 24px 28px; margin: 28px 0 36px; }
+  .event p { color: #e1d9c8; margin: 4px 0; }
+  .event strong { color: #fff9ee; font-weight: 600; }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  .steps li { background: var(--card); border-radius: 8px; padding: 22px 24px 22px 72px; margin-bottom: 14px; position: relative; counter-increment: s; }
+  .steps li::before { content: counter(s); position: absolute; left: 24px; top: 20px; font-family: "Newsreader", Georgia, serif; font-size: 32px; line-height: 1; color: var(--accent); }
+  .steps h2 { margin: 0 0 4px; font-size: 24px; color: var(--text); }
+  .steps p { margin: 0; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 6px; background: #f2b136; color: #271900; font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
+  .btn:hover { background: #d99a1e; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--text); color: var(--text); }
+  .note { font-size: 15px; margin-top: 28px; }
+  @media (max-width: 600px) {
+    .steps li { padding: 20px 18px 20px 52px; }
+    .steps li::before { left: 18px; font-size: 28px; }
+    .event { padding: 20px; }
+  }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header><div class="bar"><a class="brand" href="index.html">Pured Media</a></div></header>
+<main>
+  <span class="badge">✓ Seat saved</span>
+  <h1 id="headline">You're in!</h1>
+  <p class="meta">Your seat for Max's free live masterclass is saved.</p>
+
+  <div class="event">
+    <p><strong>How to Get Paid by Brands to Make Videos From Your Phone</strong></p>
+    <p>Friday, October 23 · [TIME] CT · Live on YouTube</p>
+  </div>
+
+  <ol class="steps">
+    <li>
+      <h2>Check your email</h2>
+      <p>We just sent your confirmation with the YouTube link. If you don't see it in a few minutes, check your Promotions or Spam folder. If you said yes to texts, we sent it by text too.</p>
+    </li>
+    <li id="cal-step">
+      <h2>Add it to your calendar</h2>
+      <p>So the time doesn't sneak up on you.</p>
+      <div class="btns">
+        <a class="btn" id="gcal" href="#" target="_blank" rel="noopener">Google Calendar</a>
+        <button class="btn ghost" id="ics" type="button">Apple / Outlook</button>
+      </div>
+    </li>
+    <li>
+      <h2>Save the YouTube link</h2>
+      <p id="yt-text">Open the link a few minutes early on Friday. Stay to the end for the live Q&amp;A, and be there live for a chance at the giveaway.</p>
+      <div class="btns" id="yt-btns">
+        <a class="btn" id="yt" href="#" target="_blank" rel="noopener">Open the YouTube page</a>
+      </div>
+    </li>
+  </ol>
+
+  <p class="note">Questions? <a href="faq.html">Read the FAQ</a> or email <a href="mailto:max@puredmedia.com">max@puredmedia.com</a>.</p>
+</main>
+<footer>
+  <nav><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="earnings-disclaimer.html">Earnings Disclaimer</a></nav>
+  © 2026 Pured Media Studios LLC DBA Pured Media. All rights reserved.
+</footer>
+<script>
+  // Fill these in once the time and YouTube link are set. Until then the matching buttons stay hidden.
+  const YOUTUBE_URL = '';          // e.g. 'https://youtube.com/live/abc123'
+  const START_UTC = '';            // e.g. '2026-10-23T23:00:00Z' (6:00 PM CT = 23:00 UTC in October)
+  const LENGTH_MIN = 90;
+  const TITLE = 'Free Live Masterclass with Max (Pured Media)';
+
+  // Greet by first name if the form passed it (?n=Caiden).
+  const name = new URLSearchParams(location.search).get('n');
+  if (name) document.getElementById('headline').textContent = "You're in, " + name.slice(0, 40) + '!';
+
+  if (YOUTUBE_URL) {
+    document.getElementById('yt').href = YOUTUBE_URL;
+  } else {
+    document.getElementById('yt-btns').hidden = true;
+  }
+
+  if (START_UTC) {
+    const start = new Date(START_UTC);
+    const end = new Date(start.getTime() + LENGTH_MIN * 60000);
+    const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const details = 'Live on YouTube' + (YOUTUBE_URL ? ': ' + YOUTUBE_URL : '. The link is in your confirmation email.');
+    document.getElementById('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent(TITLE)
+      + '&dates=' + fmt(start) + '/' + fmt(end)
+      + '&details=' + encodeURIComponent(details)
+      + '&location=' + encodeURIComponent(YOUTUBE_URL || 'YouTube Live');
+    document.getElementById('ics').addEventListener('click', () => {
+      const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Pured Media//Masterclass//EN', 'BEGIN:VEVENT',
+        'UID:masterclass-' + fmt(start) + '@puredmedia.com', 'DTSTAMP:' + fmt(new Date()),
+        'DTSTART:' + fmt(start), 'DTEND:' + fmt(end), 'SUMMARY:' + TITLE,
+        'DESCRIPTION:' + details, 'LOCATION:' + (YOUTUBE_URL || 'YouTube Live'),
+        'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY', 'DESCRIPTION:Masterclass starts in 30 minutes', 'END:VALARM',
+        'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      a.download = 'pured-media-masterclass.ics';
+      a.click();
+    });
+  } else {
+    document.getElementById('cal-step').hidden = true;
+  }
+</script>
+</body>
+</html>
