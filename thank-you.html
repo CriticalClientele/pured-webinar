@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- DO NOT DEPLOY until DAY_DATE_TEXT, DISCORD_URL, rules link and [PRIZE] are filled. -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -10,65 +11,208 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="pages.css">
 <style>
-  .badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px; background: #1e1b19; color: #f2b136; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 20px; }
-  .event { background: #1e1b19; color: #fff9ee; border-radius: 12px; padding: 24px 28px; margin: 28px 0 36px; }
-  .event p { color: #e1d9c8; margin: 4px 0; }
-  .event strong { color: #fff9ee; font-weight: 600; }
-  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
-  .steps li { background: var(--card); border-radius: 8px; padding: 22px 24px 22px 72px; margin-bottom: 14px; position: relative; counter-increment: s; }
-  .steps li::before { content: counter(s); position: absolute; left: 24px; top: 20px; font-family: "Newsreader", Georgia, serif; font-size: 32px; line-height: 1; color: var(--accent); }
-  .steps h2 { margin: 0 0 4px; font-size: 24px; color: var(--text); }
-  .steps p { margin: 0; }
-  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 6px; background: #f2b136; color: #271900; font-weight: 600; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
-  .btn:hover { background: #d99a1e; }
-  .btn.ghost { background: transparent; border: 1.5px solid var(--text); color: var(--text); }
-  .note { font-size: 15px; margin-top: 28px; }
-  @media (max-width: 600px) {
-    .steps li { padding: 20px 18px 20px 52px; }
-    .steps li::before { left: 18px; font-size: 28px; }
-    .event { padding: 20px; }
-  }
+  :root { --dk: #1e1b19; --dk2: #2a2623; --dk3: #36312d; --cream: #fff9ee; --cream2: #e1d9c8; --g: #f2b136; --g2: #d99a1e; }
+  html { background: var(--dk); }
+  body { background: var(--dk); color: var(--cream); }
   [hidden] { display: none !important; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--g); outline-offset: 3px; }
+  header.top { background: var(--dk); border-bottom: 1px solid rgba(255,249,238,.12); }
+  header.top .bar { justify-content: center; height: 88px; }
+  header.top .brand img { display: block; height: 84px; width: 84px; }
+  header.top .brand { color: var(--cream); font-size: 16px; }
+  header.top .brand span { color: var(--g); margin: 0 8px; }
+  main.ty { max-width: 1040px; padding: 40px 20px 64px; text-align: center; }
+  p, li { color: var(--cream2); }
+  .check { width: 88px; height: 88px; margin: 0 auto 20px; display: block; }
+  .ty h1 { color: var(--cream); font-size: clamp(46px, 11vw, 80px); line-height: 1.05; margin: 0 0 14px; font-weight: 500; }
+  .sub { font-family: "Newsreader", Georgia, serif; font-size: clamp(23px, 5vw, 30px); line-height: 1.3; color: var(--cream); margin: 0 auto 12px; max-width: 640px; }
+  .support { font-size: 18px; color: var(--cream2); margin: 0 auto; max-width: 600px; }
+  .event { background: var(--dk2); border: 1px solid rgba(242,177,54,.45); border-radius: 12px; padding: 20px 22px; margin: 28px auto 0; max-width: 640px; }
+  .event p { margin: 2px 0; color: var(--cream2); font-size: 18px; }
+  .event strong { color: var(--cream); font-weight: 600; font-size: 19px; }
+  .event .when { color: var(--g); font-weight: 600; }
+
+  /* mockups */
+  main.ty { display: flex; flex-direction: column; }
+  .mocks { display: grid; grid-template-columns: 1fr; gap: 36px; margin: 48px 0 0; justify-items: center; align-items: start; }
+  .mock-wrap.mail-wrap { display: none; }
+  .mock-wrap .phone { max-width: 270px; }
+  .mock-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+  .mock-label { font-size: 17px; font-weight: 600; color: var(--g); margin: 0 0 14px; line-height: 1.35; }
+  .phone { width: 100%; max-width: 300px; background: #0f0d0c; border: 3px solid #4a443f; border-radius: 40px; padding: 10px; box-shadow: 0 18px 40px rgba(0,0,0,.45); text-align: left; }
+  .phone-in { background: #171413; border-radius: 30px; min-height: 360px; padding-bottom: 28px; overflow: hidden; }
+  .p-status { display: flex; justify-content: space-between; padding: 14px 22px 6px; font-size: 14px; font-weight: 600; color: var(--cream); }
+  .p-head { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0 12px; border-bottom: 1px solid rgba(255,249,238,.1); }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--dk3); color: var(--cream); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 18px; flex: none; }
+  .p-head small { font-size: 14px; color: var(--cream2); }
+  .bubble { background: #2e2a27; color: var(--cream); font-size: 15px; line-height: 1.45; border-radius: 18px 18px 18px 4px; padding: 12px 14px; margin: 16px 14px 0; }
+  .laptop { width: 100%; max-width: 520px; }
+  .screen { background: #0f0d0c; border: 3px solid #4a443f; border-bottom: 0; border-radius: 14px 14px 0 0; padding: 10px 10px 0; box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+  .screen-in { background: #171413; border-radius: 8px 8px 0 0; padding: 12px 14px 0; height: 330px; overflow: hidden; text-align: left; position: relative; }
+  .screen-in::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; background: linear-gradient(to bottom, rgba(23,20,19,0), #171413 88%); }
+  .base { height: 14px; background: linear-gradient(#4a443f, #332f2b); border-radius: 0 0 14px 14px; width: 108%; margin-left: -4%; }
+  .tools { display: flex; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,249,238,.1); }
+  .tools i { width: 16px; height: 16px; border-radius: 4px; background: var(--dk3); display: block; }
+  .subject { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 0 8px; font-size: 16px; font-weight: 600; color: var(--cream); line-height: 1.3; }
+  .tag { font-size: 13px; font-weight: 500; background: var(--dk3); color: var(--cream2); border-radius: 4px; padding: 1px 8px; }
+  .from { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--cream); }
+  .from .avatar { width: 34px; height: 34px; font-size: 15px; background: var(--g); color: #271900; }
+  .from small { display: block; color: #bdb4a2; font-size: 14px; line-height: 1.2; }
+  .mail-body { background: #211d1b; border: 1px solid rgba(255,249,238,.08); border-radius: 8px; padding: 16px; margin-top: 12px; font-size: 15px; color: var(--cream2); line-height: 1.5; }
+  .mail-body b { color: var(--cream); }
+  .mail-body .big { display: block; color: var(--g); font-size: 16px; letter-spacing: .03em; margin-bottom: 6px; }
+
+  /* steps */
+  .steps { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: s; display: grid; grid-template-columns: 1fr; gap: 16px; text-align: left; }
+  .steps li { counter-increment: s; background: var(--dk2); border: 1px solid rgba(255,249,238,.1); border-radius: 12px; padding: 22px 20px; display: grid; grid-template-columns: 68px 1fr; gap: 0 18px; align-items: start; }
+  .ico { position: relative; width: 68px; height: 68px; border-radius: 50%; background: var(--dk3); border: 2px solid var(--g); display: flex; align-items: center; justify-content: center; color: var(--g); }
+  .ico svg { width: 32px; height: 32px; }
+  .ico::after { content: counter(s); position: absolute; top: -8px; left: -8px; width: 30px; height: 30px; border-radius: 50%; background: var(--g); color: #271900; font-weight: 600; font-size: 17px; display: flex; align-items: center; justify-content: center; }
+  .steps h2 { font-size: 25px; line-height: 1.25; margin: 0 0 6px; color: var(--cream); }
+  .steps p { margin: 0 0 8px; font-size: 18px; color: var(--cream2); }
+  .steps strong { color: var(--cream); font-weight: 600; }
+  .steps .muted { font-size: 16px; color: #bdb4a2; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 20px; border-radius: 6px; background: var(--g); color: #271900; font-weight: 600; font-size: 16px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; }
+  .btn:hover { background: var(--g2); }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--cream); color: var(--cream); }
+  .btn.ghost:hover { background: rgba(255,249,238,.1); }
+  .btn[aria-disabled="true"], .btn:disabled { background: var(--dk3); color: #bdb4a2; border: 1.5px dashed #6b645d; cursor: not-allowed; }
+  .steps .soon { font-size: 16px; color: #bdb4a2; margin: 10px 0 0; }
+  .legal-line { font-size: 17px; color: var(--cream2); margin: 22px auto 0; max-width: 680px; }
+  .legal-line a { color: var(--g); }
+
+  .bigcta { display: flex; width: 100%; max-width: 640px; margin: 40px auto 0; min-height: 72px; font-size: 20px; border-radius: 8px; }
+  .micro { font-size: 17px; margin: 12px 0 0; color: var(--cream2); }
+
+  .help { margin: 44px auto 0; max-width: 760px; border: 1.5px solid rgba(242,177,54,.55); border-radius: 12px; padding: 24px 20px; text-align: left; display: grid; grid-template-columns: 1fr; gap: 12px; background: rgba(255,249,238,.03); }
+  .help .q { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--g); color: var(--g); display: flex; align-items: center; justify-content: center; font-family: "Newsreader", Georgia, serif; font-size: 26px; }
+  .help h2 { margin: 0 0 8px; font-size: 26px; color: var(--cream); }
+  .help ul { margin: 0; padding-left: 22px; }
+  .help li { font-size: 18px; margin-bottom: 8px; color: var(--cream2); }
+  .help a { color: var(--g); }
+  .note { font-size: 17px; margin-top: 32px; }
+  .note a { color: var(--g); }
+  footer { background: #f0e7d5; }
+
+  @media (min-width: 760px) {
+    main.ty { padding-top: 56px; }
+    .help { grid-template-columns: 56px 1fr; gap: 16px; padding: 28px; }
+  }
+  @media (min-width: 940px) {
+    .mocks { grid-template-columns: 300px 1fr; gap: 48px; justify-items: stretch; margin: 44px 0 52px; order: 1; }
+    .mock-wrap.mail-wrap { display: flex; }
+    .mock-wrap .phone { max-width: 300px; }
+    main.ty .steps { margin-top: 0; }
+    .mock-wrap:last-child .laptop { margin: 0 auto; }
+    .steps, .legal-line, .bigcta, .micro, .help, .note { order: 2; }
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .steps li { display: block; padding: 28px 22px; text-align: center; }
+    .steps .ico { margin: 0 auto 18px; }
+    .steps .btns { justify-content: center; }
+  }
 </style>
 </head>
 <body>
-<header><div class="bar"><a class="brand" href="index.html">Pured Media</a></div></header>
-<main>
-  <span class="badge">✓ Seat saved</span>
+<header class="top"><div class="bar"><a class="brand" href="index.html"><img src="pm-logo.png" alt="Pured Media" width="84" height="84"></a></div></header>
+<main class="ty">
+  <svg class="check" viewBox="0 0 96 96" role="img" aria-label="Seat saved"><circle cx="48" cy="48" r="43" fill="#2a2623" stroke="#f2b136" stroke-width="4"/><path d="M28 50 l14 14 l27 -30" fill="none" stroke="#f2b136" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <h1 id="headline">You're in!</h1>
-  <p class="meta">Your seat for Max's free live masterclass is saved.</p>
+  <p class="sub">Your seat for Max's free live masterclass is saved.</p>
+  <!-- GIVEAWAY -->
+  <p class="support">Do these 3 quick steps so you don't miss it and you're eligible for the giveaway.</p>
+  <!-- /GIVEAWAY -->
+  <!-- If giveaway is cancelled, use this instead:
+  <p class="support">Do these 2 quick steps so you don't miss it.</p>
+  -->
 
   <div class="event">
     <p><strong>How to Get Paid by Brands to Make Videos From Your Phone</strong></p>
-    <p>Friday, October 23 · [TIME] CT · Live on YouTube</p>
+    <p class="when"><span class="day-date">[DAY_DATE] · [TIME]</span> · Live on YouTube</p>
   </div>
 
   <ol class="steps">
-    <li>
-      <h2>Check your email</h2>
-      <p>Your confirmation is on its way to your email. The YouTube link will be in it, and we'll email it again before class. If you don't see it in a few minutes, check Promotions or Spam.</p>
-      <p>If you opted in to texts (US and Canada numbers), a text confirmation is on its way.</p>
-    </li>
     <li id="cal-step">
-      <h2>Add it to your calendar</h2>
-      <p>So the time doesn't sneak up on you.</p>
-      <div class="btns">
-        <a class="btn" id="gcal" href="#" target="_blank" rel="noopener">Google Calendar</a>
-        <button class="btn ghost" id="ics" type="button">Apple / Outlook</button>
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div>
+      <div>
+        <h2>Add it to your calendar.</h2>
+        <p>So you don't miss it. Your seat is already saved.</p>
+        <div class="btns">
+          <a class="btn" id="gcal" href="#" target="_blank" rel="noopener">Google Calendar</a>
+          <button class="btn ghost" id="ics" type="button">Apple / Outlook</button>
+        </div>
+        <p class="soon" id="cal-soon" hidden>Calendar link coming soon</p>
       </div>
     </li>
     <li>
-      <h2>Save the YouTube link</h2>
-      <!-- GIVEAWAY: hidden pending decision
-      Original: Open the link a few minutes early on Friday. Stay to the end for the live Q&amp;A, and be there live for a chance at the giveaway.
-      -->
-      <p id="yt-text">Open the link a few minutes early on Friday. Stay to the end for the live Q&amp;A.</p>
-      <div class="btns" id="yt-btns">
-        <a class="btn" id="yt" href="#" target="_blank" rel="noopener">Open the YouTube page</a>
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H10l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 10h8M8 13h5"/></svg></div>
+      <div>
+        <h2>Join our Discord and tap "Interested"</h2>
+        <p>It's free. On the Discord event, tap <strong>Interested</strong>. <!-- GIVEAWAY -->That enters you in the giveaway for [PRIZE] (US residents 18+, see <a href="#rules-link-needed">Official Rules</a>). <!-- /GIVEAWAY -->Your seat is saved either way.</p>
+        <div class="btns"><a class="btn" id="discord-step" href="#discord-link-needed">Join the Discord</a></div>
+        <p class="muted">New to Discord? It's a free app, like a group chat.<!-- GIVEAWAY --> Prefer not to use it? There's a free email entry in the <a href="#rules-link-needed">Official Rules</a>.<!-- /GIVEAWAY --></p>
       </div>
     </li>
+    <!-- GIVEAWAY -->
+    <li>
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></div>
+      <div>
+        <h2>Be there live.</h2>
+        <p>You must be live to win. Your YouTube link is in your email.</p>
+      </div>
+    </li>
+    <!-- /GIVEAWAY -->
   </ol>
+
+  <!-- GIVEAWAY -->
+  <p class="legal-line">No purchase necessary. Open to US residents 18+. Void where prohibited. Must be live to win. See <a href="#rules-link-needed" id="rules-link">Official Rules</a> for details and the free alternate way to enter.</p>
+  <!-- /GIVEAWAY -->
+
+  <a class="btn bigcta" id="discord" href="#discord-link-needed">Join the Discord</a>
+  <p class="micro">Free, and quick if you already have Discord.</p>
+
+  <div class="mocks">
+    <div class="mock-wrap">
+      <p class="mock-label">On your phone (if you opted in to texts)</p>
+      <div class="phone" aria-label="Example text message">
+        <div class="phone-in">
+          <div class="p-status"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
+          <div class="p-head"><div class="avatar">P</div><small>Pured Media</small></div>
+          <div class="bubble">Pured Media: Hi Jennifer, your seat is saved for Max's live class <span class="day-date-comma">[DAY_DATE], [TIME]</span>. Link is in your email. You'll get 3 class reminders. Msg&amp;data rates may apply. Reply HELP for help, STOP to opt out.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mock-wrap mail-wrap">
+      <p class="mock-label">In your email</p>
+      <div class="laptop" aria-label="Example email">
+        <div class="screen"><div class="screen-in">
+          <div class="tools"><i></i><i></i><i></i><i></i></div>
+          <div class="subject">You're in. Here is your link for my free class <span class="tag">Inbox</span></div>
+          <div class="from"><div class="avatar">M</div><div>Max, Pured Media<small>to me</small></div></div>
+          <div class="mail-body">
+            <b class="big">YOU'RE IN, Jennifer!</b>
+            Your seat is saved for my free live masterclass:<br>
+            <b>How to Get Paid by Brands to Make Videos From Your Phone</b>
+          </div>
+        </div></div>
+        <div class="base"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="help" aria-labelledby="help-h">
+    <div class="q" aria-hidden="true">?</div>
+    <div>
+      <h2 id="help-h">Didn't get it?</h2>
+      <ul>
+        <li>Check Promotions or Spam. If you find it, move it to your main inbox so Max's reminders reach you.</li>
+        <li>Texts only go to people who opted in with a US or Canada number. No text is fine, because your email has everything.</li>
+        <li>Still stuck? Email <a href="mailto:max@puredmedia.com">max@puredmedia.com</a></li>
+        <li>Your seat is saved either way.</li>
+      </ul>
+    </div>
+  </section>
 
   <p class="note">Questions? <a href="faq.html">Read the FAQ</a> or email <a href="mailto:max@puredmedia.com">max@puredmedia.com</a>.</p>
 </main>
@@ -77,20 +221,28 @@
   © 2026 Pured Media Studios LLC DBA Pured Media. All rights reserved.
 </footer>
 <script>
-  // Fill these in once the time and YouTube link are set. Until then the matching buttons stay hidden.
+  // Fill these in once the details are set.
   const YOUTUBE_URL = '';          // e.g. 'https://youtube.com/live/abc123'
-  const START_UTC = '';            // e.g. '2026-10-23T23:00:00Z' (6:00 PM CT = 23:00 UTC in October)
+  const START_UTC = '';            // e.g. '2026-10-23T23:00:00Z' (6:00 PM CT = 23:00 UTC in October). Empty = calendar buttons show disabled.
+  const DAY_DATE_TEXT = '[DAY_DATE] · [TIME]';   // single source for the date/time on the page, e.g. 'Friday, October 23 · 6:00 PM CT'
+  const DISCORD_URL = '';          // e.g. 'https://discord.gg/xxxx'. Empty = button goes to #discord-link-needed
   const LENGTH_MIN = 90;
   const TITLE = 'Free Live Masterclass with Max (Pured Media)';
+
+  document.querySelectorAll('.day-date').forEach((el) => { el.textContent = DAY_DATE_TEXT; });
+  document.querySelectorAll('.day-date-comma').forEach((el) => { el.textContent = DAY_DATE_TEXT.replace(' · ', ', '); });
+
+  if (DAY_DATE_TEXT.includes('[') || !DISCORD_URL) console.warn('thank-you: placeholders not filled');
 
   // Greet by first name if the form passed it (?n=Caiden).
   const name = new URLSearchParams(location.search).get('n');
   if (name) document.getElementById('headline').textContent = "You're in, " + name.slice(0, 40) + '!';
 
-  if (YOUTUBE_URL) {
-    document.getElementById('yt').href = YOUTUBE_URL;
-  } else {
-    document.getElementById('yt-btns').hidden = true;
+  if (DISCORD_URL) {
+    for (const id of ['discord', 'discord-step']) {
+      const d = document.getElementById(id);
+      d.href = DISCORD_URL; d.target = '_blank'; d.rel = 'noopener';
+    }
   }
 
   if (START_UTC) {
@@ -116,7 +268,11 @@
       a.click();
     });
   } else {
-    document.getElementById('cal-step').hidden = true;
+    // Keep step 1 visible (steps are numbered 1-2-3) but disable the buttons.
+    const g = document.getElementById('gcal');
+    g.removeAttribute('href'); g.removeAttribute('target'); g.setAttribute('aria-disabled', 'true'); g.setAttribute('role', 'link');
+    document.getElementById('ics').disabled = true;
+    document.getElementById('cal-soon').hidden = false;
   }
 </script>
 </body>
