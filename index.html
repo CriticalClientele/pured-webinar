@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Free UGC Masterclass | Pured Media</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&amp;family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.8.2/build/css/intlTelInput.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}}html{scroll-behavior:smooth;}
 /* Registration dropdown */
 .drawer{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease;}
@@ -26,6 +27,10 @@
   .cta-shake-desktop{animation:cta-shake 6s ease-in-out infinite;}
   .cta-shake-desktop:hover,.cta-shake-desktop:focus-visible,.cta-shake-desktop:disabled{animation:none;}
 }
+/* Phone country picker (intl-tel-input) */
+.iti{width:100%;}
+.iti__selected-country{border-radius:.5rem 0 0 .5rem;}
+.iti__country-list,.iti__dropdown-content{font-size:16px;}
 /* FAQ accordion */
 details summary::-webkit-details-marker{display:none;}
 details[open] .faq-icon{transform:rotate(45deg);}
@@ -105,10 +110,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
 </div>
 <div>
 <label class="block font-label-lg text-label-lg text-on-surface mb-2 font-medium" for="phone">Mobile Phone</label>
-<div class="flex gap-2">
-<span class="h-14 px-4 bg-surface-container-high rounded-lg font-body-md text-on-surface flex items-center justify-center font-medium shrink-0">+1</span>
-<input autocomplete="tel-national" class="w-full h-14 px-4 bg-surface rounded-lg font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-on-surface transition-colors" id="phone" name="phone" required="" type="tel"/>
-</div>
+<input autocomplete="tel" class="w-full h-14 px-4 bg-surface rounded-lg font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-on-surface transition-colors" id="phone" name="phone" required="" type="tel"/>
 </div>
 <div class="flex items-start gap-3 pt-1">
 <input class="mt-1 h-5 w-5 rounded bg-surface cursor-pointer shrink-0 accent-secondary" id="sms-consent" name="sms_consent" type="checkbox"/>
@@ -269,6 +271,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
 
 <footer class="w-full bg-surface-container-high border-t border-on-surface/10 py-space-xl"><div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center text-center space-y-space-md"><div class="font-headline-caps text-headline-caps tracking-widest text-primary uppercase opacity-90">PURED MEDIA</div><p class="max-w-2xl font-body-md text-on-surface-variant text-sm">Pured Media provides education about user-generated content. We do not guarantee brand deals, income, or any specific result. Examples shared are individual experiences, are not typical, and are not a promise of what you will earn. Outcomes depend on effort, skill, and market conditions.</p><p class="max-w-2xl font-body-md text-on-surface-variant text-sm">This site is not part of Facebook or Meta Platforms, Inc., and is not endorsed by Meta in any way. YouTube is a trademark of Google LLC. This event and giveaway are not sponsored, endorsed, or administered by YouTube or Google.</p><div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-label-sm font-label-sm tracking-widest uppercase text-on-surface-variant"><a class="underline hover:text-primary transition-colors" href="faq.html">FAQ</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="terms.html">Terms of Service</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="earnings-disclaimer.html">Earnings Disclaimer</a></div><div class="text-label-sm font-label-sm tracking-wider text-outline">© 2026 Pured Media Studios LLC DBA Pured Media. All rights reserved. · <a class="underline" href="mailto:max@puredmedia.com">max@puredmedia.com</a></div></div></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.8.2/build/js/intlTelInput.min.js"></script>
 <script>
   // Scroll reveal for cards; staggered within each group. Skipped if unsupported.
   if ('IntersectionObserver' in window) {
@@ -315,6 +318,26 @@ details[open] .faq-icon{transform:rotate(45deg);}
   const THANK_YOU_URL = '';
   const CONSENT_TEXT = document.querySelector('label[for="sms-consent"]').textContent.trim();
 
+  // Phone: country picker + real number-format check (libphonenumber via intl-tel-input). Defaults to US.
+  const iti = window.intlTelInput(document.getElementById('phone'), {
+    initialCountry: 'us',
+    countryOrder: ['us', 'ca', 'gb', 'au'],
+    separateDialCode: true,
+    strictMode: true,
+    dropdownContainer: document.body, // the registration drawer clips overflow
+    utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24.8.2/build/js/utils.js'
+  });
+
+  // Email: format check, throwaway-inbox block, and "did you mean" for common domain typos.
+  const DISPOSABLE = ['mailinator.com', 'guerrillamail.com', 'sharklasers.com', '10minutemail.com', 'tempmail.com', 'temp-mail.org', 'yopmail.com', 'trashmail.com', 'getnada.com', 'dispostable.com', 'maildrop.cc', 'throwawaymail.com', 'fakeinbox.com', 'mailnesia.com', 'emailondeck.com', 'moakt.com', 'tempail.com', 'mohmal.com'];
+  const TYPOS = {
+    'gmial.com': 'gmail.com', 'gmal.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gnail.com': 'gmail.com', 'gmail.co': 'gmail.com', 'gmail.con': 'gmail.com', 'gmail.cm': 'gmail.com', 'gamil.com': 'gmail.com',
+    'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'yahoo.con': 'yahoo.com', 'yahoo.co': 'yahoo.com',
+    'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com', 'hotmail.con': 'hotmail.com', 'hotmail.co': 'hotmail.com',
+    'outlok.com': 'outlook.com', 'outlook.con': 'outlook.com', 'icloud.con': 'icloud.com', 'icoud.com': 'icloud.com', 'aol.con': 'aol.com'
+  };
+  let emailWarnedFor = '';
+
   const errorBox = document.getElementById('reg-error');
   function showError(msg) {
     errorBox.textContent = msg;
@@ -336,14 +359,38 @@ details[open] .faq-icon{transform:rotate(45deg);}
       return;
     }
 
-    // US/CA numbers only: strip a leading 1, require 10 digits.
-    let digits = form.phone.value.replace(/\D/g, '');
-    if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
-    if (digits.length !== 10) {
-      showError('Please enter a 10-digit US or Canada mobile number.');
+    const email = form.email.value.trim().toLowerCase();
+    const domain = email.split('@')[1] || '';
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/.test(email)) {
+      showError('Please enter a valid email address.');
+      form.email.focus();
+      return;
+    }
+    if (DISPOSABLE.includes(domain)) {
+      showError('Please use your real email so you get the class link.');
+      form.email.focus();
+      return;
+    }
+    // Typo: warn once; submitting the same email again lets it through in case it's real.
+    if (TYPOS[domain] && emailWarnedFor !== email) {
+      emailWarnedFor = email;
+      form.email.value = email.split('@')[0] + '@' + TYPOS[domain];
+      showError('We fixed a typo in your email to ' + form.email.value + '. Check it and press Confirm again.');
+      form.email.focus();
+      return;
+    }
+
+    // Precise check rejects fake numbers (555-555-5555, 123-456-7890). Number types: 1 mobile, 2 mobile-or-landline (US/CA), 7 VoIP;
+    // landlines, toll-free and premium are rejected. Both return null until the rules load; then fall back to a length check.
+    const valid = iti.isValidNumberPrecise();
+    const type = iti.getNumberType();
+    const phoneDigits = form.phone.value.replace(/\D/g, '');
+    if (valid === false || (valid && ![1, 2, 7].includes(type)) || (valid === null && (phoneDigits.length < 7 || phoneDigits.length > 15))) {
+      showError('Please enter a valid mobile number and check the country.');
       form.phone.focus();
       return;
     }
+    const phone = iti.getNumber() || ('+' + iti.getSelectedCountryData().dialCode + phoneDigits);
 
     submitBtn.disabled = true;
     submitBtn.classList.add('opacity-60');
@@ -353,8 +400,9 @@ details[open] .faq-icon{transform:rotate(45deg);}
       full_name: fullName,
       first_name: nameParts[0],
       last_name: nameParts.slice(1).join(' '),
-      email: form.email.value.trim(),
-      phone: '+1' + digits,
+      email: form.email.value.trim().toLowerCase(),
+      phone: phone,
+      phone_country: (iti.getSelectedCountryData().iso2 || '').toUpperCase(),
       sms_consent: consent ? 'yes' : 'no',
       sms_consent_text: consent ? CONSENT_TEXT : '',
       consent_version: '2026-10-v2',
