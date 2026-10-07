@@ -9,18 +9,24 @@
 .reg-toggle[aria-expanded="true"] .chev{transform:rotate(180deg);}
 .reg-toggle[aria-expanded="true"]{display:none;}
 @media (min-width:1024px){.drawer{grid-template-rows:1fr;}#reg-toggle{display:none;}}
-/* Animations (all off when the visitor asks for reduced motion) */
+/* Animations. Fades + dot pulse run for everyone; movement (slide, wiggle) only without reduced motion */
+/* Cards fade in on scroll; only hidden once JS confirms it can reveal them */
+.js-anim .reveal{opacity:0;transition:opacity .6s ease,transform .5s ease;}
+.js-anim .reveal.in{opacity:1;transform:none;}
+/* Live dot pulse (no movement) */
+@keyframes live-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,222,169,.6)}50%{opacity:.35;box-shadow:0 0 0 5px rgba(255,222,169,0)}}
+.live-dot{animation:live-dot 1.6s ease-in-out infinite;}
 @media (prefers-reduced-motion:no-preference){
-  /* Cards fade up on scroll; only hidden once JS confirms it can reveal them */
-  .js-anim .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease;}
-  .js-anim .reveal.in{opacity:1;transform:none;}
+  .js-anim .reveal:not(.in){transform:translateY(18px);}
   /* Save My Seat buttons: small wiggle every few seconds */
   @keyframes cta-shake{0%,80%,100%{transform:translateX(0)}84%{transform:translateX(-2px) rotate(-.5deg)}88%{transform:translateX(2px) rotate(.5deg)}92%{transform:translateX(-1px) rotate(-.3deg)}96%{transform:translateX(0)}}
   .cta-shake{animation:cta-shake 6s ease-in-out infinite;}
   .cta-shake:hover,.cta-shake:focus-visible{animation:none;}
-  /* Live dot pulse */
-  @keyframes live-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,222,169,.6)}50%{opacity:.35;box-shadow:0 0 0 5px rgba(255,222,169,0)}}
-  .live-dot{animation:live-dot 1.6s ease-in-out infinite;}
+  /* Desktop: the form is already open, so the Confirm button takes the wiggle */
+  @media (min-width:1024px){
+    .cta-shake-desktop{animation:cta-shake 6s ease-in-out infinite;}
+    .cta-shake-desktop:hover,.cta-shake-desktop:focus-visible,.cta-shake-desktop:disabled{animation:none;}
+  }
 }
 /* FAQ accordion */
 details summary::-webkit-details-marker{display:none;}
@@ -107,7 +113,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
                   Text me masterclass reminders from Pured Media. Up to 3 msgs/week. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Not required to register or buy. <a class="underline" href="terms.html">Terms</a> · <a class="underline" href="privacy.html">Privacy</a>
                 </label>
 </div>
-<button class="w-full min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm active:translate-y-0.5" type="submit">
+<button class="cta-shake-desktop w-full min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm active:translate-y-0.5" type="submit">
 <span>Confirm My Registration</span>
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
@@ -283,8 +289,8 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <footer class="w-full bg-surface-container-high border-t border-on-surface/10 py-space-xl"><div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center text-center space-y-space-md"><div class="font-headline-caps text-headline-caps tracking-widest text-primary uppercase opacity-90">PURED MEDIA</div><p class="max-w-2xl font-body-md text-on-surface-variant text-sm">Pured Media provides education about user-generated content. We do not guarantee brand deals, income, or any specific result. Examples shared are individual experiences, are not typical, and are not a promise of what you will earn. Outcomes depend on effort, skill, and market conditions.</p><p class="max-w-2xl font-body-md text-on-surface-variant text-sm">This site is not part of Facebook or Meta Platforms, Inc., and is not endorsed by Meta in any way. YouTube is a trademark of Google LLC. This event and giveaway are not sponsored, endorsed, or administered by YouTube or Google.</p><div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-label-sm font-label-sm tracking-widest uppercase text-on-surface-variant"><a class="underline hover:text-primary transition-colors" href="faq.html">FAQ</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="terms.html">Terms of Service</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="privacy.html">Privacy Policy</a><span class="text-outline-variant">•</span><a class="underline hover:text-primary transition-colors" href="earnings-disclaimer.html">Earnings Disclaimer</a></div><div class="text-label-sm font-label-sm tracking-wider text-outline">© 2026 Pured Media Studios LLC DBA Pured Media. All rights reserved. · <a class="underline" href="mailto:max@puredmedia.com">max@puredmedia.com</a></div></div></footer>
 
 <script>
-  // Scroll reveal for cards; staggered within each group. Skipped if unsupported or reduced motion.
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Scroll reveal for cards; staggered within each group. Skipped if unsupported.
+  if ('IntersectionObserver' in window) {
     document.documentElement.classList.add('js-anim');
     document.querySelectorAll('.reveal').forEach((el) => {
       const i = [...el.parentElement.children].filter((c) => c.classList.contains('reveal')).indexOf(el);
