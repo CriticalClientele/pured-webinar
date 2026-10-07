@@ -149,7 +149,6 @@
         <h2>Join our Discord and tap "Interested"</h2>
         <p>It's free. On the Discord event, tap <strong>Interested</strong>. <!-- GIVEAWAY -->That enters you in the giveaway for [PRIZE] (US residents 18+, see <a href="#rules-link-needed">Official Rules</a>). <!-- /GIVEAWAY -->Your seat is saved either way.</p>
         <div class="btns"><a class="btn" id="discord-step" href="#discord-link-needed">Join the Discord</a></div>
-        <p class="muted">New to Discord? It's a free app, like a group chat.<!-- GIVEAWAY --> Prefer not to use it? There's a free email entry in the <a href="#rules-link-needed">Official Rules</a>.<!-- /GIVEAWAY --></p>
       </div>
     </li>
     <!-- GIVEAWAY -->
@@ -173,7 +172,7 @@
         <div class="phone-in">
           <div class="p-status"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
           <div class="p-head"><div class="avatar">P</div><small>Pured Media</small></div>
-          <div class="bubble">Pured Media: Hi Jane, your seat is saved for Max's live class <span class="sms-date">Oct 23, 2026 at [TIME]</span>. Link is in your email.</div>
+          <div class="bubble">Pured Media: Hi <span class="mock-name">Jane</span>, your seat is saved for Max's live class <span class="sms-date">Oct 23, 2026 at [TIME]</span>. Link is in your email.</div>
         </div>
       </div>
     </div>
@@ -185,7 +184,7 @@
           <div class="subject">You're in. Here is your link for my free class <span class="tag">Inbox</span></div>
           <div class="from"><div class="avatar">M</div><div>Max, Pured Media<small>to me</small></div></div>
           <div class="mail-body">
-            <b class="big">YOU'RE IN, Jane!</b>
+            <b class="big">YOU'RE IN, <span class="mock-name-caps">Jane</span>!</b>
             Your seat is saved for my free live masterclass:<br>
             <b>How to Get Paid by Brands to Make Videos From Your Phone</b>
           </div>
@@ -202,7 +201,6 @@
       <h2 id="help-h">Didn't get it?</h2>
       <ul>
         <li>Check Promotions or Spam. If you find it, move it to your main inbox so Max's reminders reach you.</li>
-        <li>Texts only go to people who opted in with a US or Canada number. No text is fine, because your email has everything.</li>
         <li>Still stuck? Email <a href="mailto:max@puredmedia.com">max@puredmedia.com</a></li>
         <li>Your seat is saved either way.</li>
       </ul>
@@ -218,7 +216,7 @@
 <script>
   // Fill these in once the details are set.
   const ADDEVENT_URL = '';         // AddEvent event link. Empty = calendar button shows disabled.
-  const DAY_DATE_TEXT = '[DAY_DATE] · [TIME]';   // event strip, e.g. 'Friday, October 23 · 7:00 PM CT'
+  const DAY_DATE_TEXT = 'Friday, October 23, 2026 · [TIME]';   // event strip, e.g. 'Friday, October 23 · 7:00 PM CT'
   const SMS_DATE_TEXT = 'Oct 23, 2026 at [TIME]'; // phone mockup, must match the real confirmation text
   const DISCORD_URL = '';          // e.g. 'https://discord.gg/xxxx'. Empty = button goes to #discord-link-needed
 
@@ -229,7 +227,12 @@
 
   // Greet by first name if the form passed it (?n=Caiden).
   const name = new URLSearchParams(location.search).get('n');
-  if (name) document.getElementById('headline').textContent = "You're in, " + name.slice(0, 40) + '!';
+  if (name) {
+    const n = name.slice(0, 40);
+    document.getElementById('headline').textContent = "You're in, " + n + '!';
+    // Show the registrant's own name in the phone and email mockups (default: Jane).
+    document.querySelectorAll('.mock-name, .mock-name-caps').forEach((el) => { el.textContent = n; });
+  }
 
   if (DISCORD_URL) {
     for (const id of ['discord', 'discord-step']) {
