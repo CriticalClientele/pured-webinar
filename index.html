@@ -351,7 +351,9 @@ details[open] .faq-icon{transform:rotate(45deg);}
     errorBox.classList.add('hidden');
 
     // Full name required: at least a first and last name. First word = first name, the rest = last name.
-    const fullName = form.full_name.value.trim().replace(/\s+/g, ' ');
+    // Capitalize each word so texts/emails don't greet "caiden"; leaves the rest of the word as typed (McDonald stays McDonald).
+    const fullName = form.full_name.value.trim().replace(/\s+/g, ' ')
+      .split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     const nameParts = fullName.split(' ');
     if (nameParts.length < 2) {
       showError('Please enter your first and last name.');
