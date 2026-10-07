@@ -96,8 +96,8 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <div>
 <form action="#" class="space-y-space-md pt-1" id="reg-form" method="POST">
 <div>
-<label class="block font-label-lg text-label-lg text-on-surface mb-2 font-medium" for="first-name">First Name</label>
-<input autocomplete="given-name" class="w-full h-14 px-4 bg-surface rounded-lg font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-on-surface transition-colors" id="first-name" name="first_name" required="" type="text"/>
+<label class="block font-label-lg text-label-lg text-on-surface mb-2 font-medium" for="full-name">Full Name</label>
+<input autocomplete="name" class="w-full h-14 px-4 bg-surface rounded-lg font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-on-surface transition-colors" id="full-name" name="full_name" required="" type="text"/>
 </div>
 <div>
 <label class="block font-label-lg text-label-lg text-on-surface mb-2 font-medium" for="email">Email Address</label>
@@ -297,7 +297,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
   function openForm() {
     drawer.classList.add('open');
     toggle.setAttribute('aria-expanded', 'true');
-    setTimeout(() => document.getElementById('first-name').focus({ preventScroll: true }), 350);
+    setTimeout(() => document.getElementById('full-name').focus({ preventScroll: true }), 350);
   }
 
   toggle.addEventListener('click', openForm);
@@ -327,6 +327,15 @@ details[open] .faq-icon{transform:rotate(45deg);}
     const submitBtn = form.querySelector('button[type="submit"]');
     errorBox.classList.add('hidden');
 
+    // Full name required: at least a first and last name. First word = first name, the rest = last name.
+    const fullName = form.full_name.value.trim().replace(/\s+/g, ' ');
+    const nameParts = fullName.split(' ');
+    if (nameParts.length < 2) {
+      showError('Please enter your first and last name.');
+      form.full_name.focus();
+      return;
+    }
+
     // US/CA numbers only: strip a leading 1, require 10 digits.
     let digits = form.phone.value.replace(/\D/g, '');
     if (digits.length === 11 && digits[0] === '1') digits = digits.slice(1);
@@ -341,7 +350,9 @@ details[open] .faq-icon{transform:rotate(45deg);}
 
     const consent = form.sms_consent.checked;
     const data = new URLSearchParams({
-      first_name: form.first_name.value.trim(),
+      full_name: fullName,
+      first_name: nameParts[0],
+      last_name: nameParts.slice(1).join(' '),
       email: form.email.value.trim(),
       phone: '+1' + digits,
       sms_consent: consent ? 'yes' : 'no',
