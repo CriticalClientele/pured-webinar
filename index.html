@@ -43,18 +43,19 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
 <!-- Left column -->
 <div class="lg:col-span-7 flex flex-col justify-between">
-<div class="space-y-space-md">
-<h1 class="font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-surface leading-[1.08] tracking-tight">
+<!-- Mobile order: headline, button, subhead (button stays above the fold on small phones). Desktop keeps headline, subhead, button. -->
+<div class="flex flex-col gap-space-md">
+<h1 class="order-1 font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-surface leading-[1.08] tracking-tight">
               How to Get Paid by Brands to Make Videos From Your Phone
             </h1>
-<p class="font-body-lead-mobile text-body-lead-mobile md:font-body-lead md:text-body-lead text-surface-variant max-w-2xl leading-relaxed">
+<p class="order-3 lg:order-2 font-body-lead-mobile text-body-lead-mobile md:font-body-lead md:text-body-lead text-surface-variant max-w-2xl leading-relaxed">
               A brand deal is when a company pays you to film short videos of its products, like a review or an unboxing, for its ads and social media. No big following needed. Join Max live to learn where to find these brands and how to pitch them.
             </p>
-<button class="cta-shake w-full lg:w-auto min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-lg" id="hero-cta" type="button">
+<button class="order-2 lg:order-3 lg:self-start cta-shake w-full lg:w-auto min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-lg" id="hero-cta" type="button">
 <span>Save My Free Seat</span>
 <span class="material-symbols-outlined text-[20px]">arrow_downward</span>
 </button>
-<div class="flex flex-wrap items-center gap-y-3 gap-x-6 py-space-xs text-surface-dim font-label-lg text-label-lg">
+<div class="order-4 flex flex-wrap items-center gap-y-3 gap-x-6 py-space-xs text-surface-dim font-label-lg text-label-lg">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-secondary-fixed text-[22px]">calendar_today</span>
 <span>Friday, October 23</span>
@@ -70,7 +71,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <span>Live on YouTube</span>
 </div>
 </div>
-<div class="p-space-sm bg-surface/5 rounded-lg flex items-start gap-space-sm">
+<div class="order-5 p-space-sm bg-surface/5 rounded-lg flex items-start gap-space-sm">
 <span class="material-symbols-outlined text-secondary-fixed text-[24px] shrink-0 mt-0.5">redeem</span>
 <p class="font-body-md text-body-md text-surface-variant">
 <strong class="text-surface font-semibold">Live giveaway:</strong> Attend live for a chance to win [GIVEAWAY PRIZE]. You must be live to win. No purchase necessary. See the <a class="underline" href="[GIVEAWAY_RULES_URL]">Official Rules</a>.
