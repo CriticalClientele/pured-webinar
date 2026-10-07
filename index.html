@@ -8,6 +8,7 @@
 .drawer>div{overflow:hidden;}
 .reg-toggle[aria-expanded="true"] .chev{transform:rotate(180deg);}
 .reg-toggle[aria-expanded="true"]{display:none;}
+@media (min-width:1024px){.drawer{grid-template-rows:1fr;}.reg-toggle{display:none;}}
 /* FAQ accordion */
 details summary::-webkit-details-marker{display:none;}
 details[open] .faq-icon{transform:rotate(45deg);}
@@ -27,7 +28,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <div class="lg:col-span-7 flex flex-col justify-between">
 <div class="space-y-space-md">
 <h1 class="font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-surface leading-[1.08] tracking-tight">
-              How to Find and Pitch Brand Deals This Q4
+              How to Find and Pitch Brand Deals This Holiday Season
             </h1>
 <p class="font-body-lead-mobile text-body-lead-mobile md:font-body-lead md:text-body-lead text-surface-variant max-w-2xl leading-relaxed">
               No big following needed to get started. Join Max live to learn where to find brands, how to pitch them with cold outreach, and how repeat work with the same brand can build from a first deal.
@@ -63,7 +64,8 @@ details[open] .faq-icon{transform:rotate(45deg);}
 </div>
 <!-- Right column: registration card -->
 <div class="lg:col-span-5 bg-surface-container-lowest text-on-surface p-8 lg:p-10 rounded-xl shadow-xl" id="register">
-<h2 class="font-headline-md text-headline-md text-on-surface font-normal mb-space-sm">Register for the Free Masterclass</h2>
+<h2 class="font-headline-md text-headline-md text-on-surface font-normal mb-2">Join Max Live</h2>
+<p class="font-label-lg text-label-lg text-on-surface-variant mb-space-sm">Fri, Oct 23 · [TIME] CT · Live on YouTube</p>
 <button aria-controls="reg-drawer" aria-expanded="false" class="reg-toggle w-full min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm" id="reg-toggle" type="button">
 <span>Save My Free Seat</span>
 <span class="chev material-symbols-outlined text-[22px] transition-transform">expand_more</span>
@@ -106,7 +108,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
             ✓ You're in! Check your email for the YouTube link.
           </div>
 <p class="font-label-sm text-label-sm text-outline tracking-wide uppercase text-center mt-4">
-            Free Masterclass · Live with Max on YouTube
+            100% free · No credit card needed
           </p>
 <p class="hidden font-body-md text-body-md text-error text-center mt-4" id="reg-error" role="alert"></p>
 </div>
@@ -255,7 +257,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <section class="w-full bg-primary-container text-surface py-space-xl">
 <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center">
 <h2 class="font-display-hero-mobile text-display-hero-mobile md:font-display-hero md:text-display-hero text-surface leading-tight tracking-tight mb-space-sm max-w-3xl mx-auto">
-        How to Find and Pitch Brand Deals This Q4
+        How to Find and Pitch Brand Deals This Holiday Season
       </h2>
 <p class="font-body-lead-mobile text-body-lead-mobile md:font-body-lead md:text-body-lead text-surface-variant max-w-2xl mx-auto mb-space-lg leading-relaxed">
         Save your free seat and join Max live on YouTube, Friday, October 23. Questions? <a class="underline" href="faq.html">Read the FAQ</a>.
@@ -350,6 +352,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
       location.href = THANK_YOU_URL;
     } else {
       drawer.classList.remove('open');
+      drawer.style.display = 'none';
       document.getElementById('reg-success').classList.remove('hidden');
     }
   });
