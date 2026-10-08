@@ -41,13 +41,13 @@
 
   <div class="event">
     <p><strong>How to Get Paid by Brands to Make Videos From Your Phone</strong></p>
-    <p>Friday, October 23 · [TIME] CT · Live on YouTube</p>
+    <p>Friday, October 23 · 6:00 PM CT · Live on Zoom</p>
   </div>
 
   <ol class="steps">
     <li>
       <h2>Check your email</h2>
-      <p>Your confirmation is on its way to your email. The YouTube link will be in it, and we'll email it again before class. If you don't see it in a few minutes, check Promotions or Spam.</p>
+      <p>Your confirmation is on its way to your email. The Zoom link will be in it, and we'll email it again before class. If you don't see it in a few minutes, check Promotions or Spam.</p>
       <p>If you opted in to texts (US and Canada numbers), a text confirmation is on its way.</p>
     </li>
     <li id="cal-step">
@@ -59,13 +59,13 @@
       </div>
     </li>
     <li>
-      <h2>Save the YouTube link</h2>
+      <h2>Save the Zoom link</h2>
       <!-- GIVEAWAY: hidden pending decision
       Original: Open the link a few minutes early on Friday. Stay to the end for the live Q&amp;A, and be there live for a chance at the giveaway.
       -->
       <p id="yt-text">Open the link a few minutes early on Friday. Stay to the end for the live Q&amp;A.</p>
       <div class="btns" id="yt-btns">
-        <a class="btn" id="yt" href="#" target="_blank" rel="noopener">Open the YouTube page</a>
+        <a class="btn" id="yt" href="#" target="_blank" rel="noopener">Open the Zoom link</a>
       </div>
     </li>
   </ol>
@@ -77,9 +77,9 @@
   © 2026 Pured Media Studios LLC DBA Pured Media. All rights reserved.
 </footer>
 <script>
-  // Fill these in once the time and YouTube link are set. Until then the matching buttons stay hidden.
-  const YOUTUBE_URL = '';          // e.g. 'https://youtube.com/live/abc123'
-  const START_UTC = '';            // e.g. '2026-10-23T23:00:00Z' (6:00 PM CT = 23:00 UTC in October)
+  // Fill these in once the time and Zoom link are set. Until then the matching buttons stay hidden.
+  const ZOOM_URL = '';          // e.g. 'https://us02web.zoom.us/j/123456789?pwd=...'
+  const START_UTC = '2026-10-23T23:00:00Z'; // 6:00 PM CT (CDT) = 23:00 UTC
   const LENGTH_MIN = 90;
   const TITLE = 'Free Live Masterclass with Max (Pured Media)';
 
@@ -87,8 +87,8 @@
   const name = new URLSearchParams(location.search).get('n');
   if (name) document.getElementById('headline').textContent = "You're in, " + name.slice(0, 40) + '!';
 
-  if (YOUTUBE_URL) {
-    document.getElementById('yt').href = YOUTUBE_URL;
+  if (ZOOM_URL) {
+    document.getElementById('yt').href = ZOOM_URL;
   } else {
     document.getElementById('yt-btns').hidden = true;
   }
@@ -97,17 +97,17 @@
     const start = new Date(START_UTC);
     const end = new Date(start.getTime() + LENGTH_MIN * 60000);
     const fmt = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const details = 'Live on YouTube' + (YOUTUBE_URL ? ': ' + YOUTUBE_URL : '. The link is in your confirmation email.');
+    const details = 'Live on Zoom' + (ZOOM_URL ? ': ' + ZOOM_URL : '. The link is in your confirmation email.');
     document.getElementById('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
       + '&text=' + encodeURIComponent(TITLE)
       + '&dates=' + fmt(start) + '/' + fmt(end)
       + '&details=' + encodeURIComponent(details)
-      + '&location=' + encodeURIComponent(YOUTUBE_URL || 'YouTube Live');
+      + '&location=' + encodeURIComponent(ZOOM_URL || 'Zoom');
     document.getElementById('ics').addEventListener('click', () => {
       const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Pured Media//Masterclass//EN', 'BEGIN:VEVENT',
         'UID:masterclass-' + fmt(start) + '@puredmedia.com', 'DTSTAMP:' + fmt(new Date()),
         'DTSTART:' + fmt(start), 'DTEND:' + fmt(end), 'SUMMARY:' + TITLE,
-        'DESCRIPTION:' + details, 'LOCATION:' + (YOUTUBE_URL || 'YouTube Live'),
+        'DESCRIPTION:' + details, 'LOCATION:' + (ZOOM_URL || 'Zoom'),
         'BEGIN:VALARM', 'TRIGGER:-PT30M', 'ACTION:DISPLAY', 'DESCRIPTION:Masterclass starts in 30 minutes', 'END:VALARM',
         'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
       const a = document.createElement('a');
