@@ -79,6 +79,8 @@
   .btn.ghost:hover { background: rgba(255,249,238,.1); }
   .btn[aria-disabled="true"], .btn:disabled { background: var(--dk3); color: #bdb4a2; border: 1.5px dashed #6b645d; cursor: not-allowed; }
   .steps .soon { font-size: 16px; color: #bdb4a2; margin: 10px 0 0; }
+  .steps .soon a { color: var(--cream); text-decoration: underline; display: inline-block; padding: 12px 0; }
+  #cal-step .btn { flex: 1 1 160px; padding: 0 12px; }
   .legal-line { font-size: 17px; color: var(--cream2); margin: 22px auto 0; max-width: 680px; }
   .legal-line a { color: var(--g); }
 
@@ -138,8 +140,10 @@
         <h2>Add it to your calendar.</h2>
         <p>So you don't miss it. Your seat is already saved.</p>
         <div class="btns">
-          <a class="btn" id="addevent" href="#" target="_blank" rel="noopener">Add to Calendar</a>
+          <a class="btn" id="cal-apple" href="#">Apple / iPhone</a>
+          <a class="btn ghost" id="cal-google" href="#" target="_blank" rel="noopener">Google Calendar</a>
         </div>
+        <p class="soon" id="cal-outlook-line">Use Outlook? <a id="cal-outlook" href="#" target="_blank" rel="noopener">Add it here</a></p>
         <p class="soon" id="cal-soon" hidden>Calendar link coming soon</p>
       </div>
     </li>
@@ -237,12 +241,17 @@
     d.href = DISCORD_URL; d.target = '_blank'; d.rel = 'noopener';
   }
 
-  const cal = document.getElementById('addevent');
+  const calLinks = { 'cal-apple': '+apple', 'cal-google': '+google', 'cal-outlook': '+outlook' };
   if (ADDEVENT_URL) {
-    cal.href = ADDEVENT_URL;
+    const base = ADDEVENT_URL.replace(/\/+$/, '');
+    for (const id in calLinks) document.getElementById(id).href = base + calLinks[id];
   } else {
-    // Keep step 1 visible (steps are numbered 1-2-3) but disable the button.
-    cal.removeAttribute('href'); cal.removeAttribute('target'); cal.setAttribute('aria-disabled', 'true'); cal.setAttribute('role', 'link');
+    // Keep step 1 visible (steps are numbered 1-2-3) but disable the buttons.
+    for (const id in calLinks) {
+      const el = document.getElementById(id);
+      el.removeAttribute('href'); el.removeAttribute('target'); el.setAttribute('aria-disabled', 'true'); el.setAttribute('role', 'link');
+    }
+    document.getElementById('cal-outlook-line').hidden = true;
     document.getElementById('cal-soon').hidden = false;
   }
 </script>
