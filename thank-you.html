@@ -86,12 +86,11 @@
     #cal-step .btns { flex-direction: column; }
     #cal-step .btn { flex: none; width: 100%; }
   }
-  /* optional discord */
-  .discord { width: 100%; max-width: 640px; margin: 24px auto 0; border: 1px solid rgba(255,249,238,.18); border-radius: 12px; padding: 20px; text-align: center; background: rgba(255,249,238,.03); }
-  .discord h2 { font-size: 22px; line-height: 1.25; margin: 0 0 8px; color: var(--cream); }
-  .discord p { margin: 0 0 8px; font-size: 18px; color: var(--cream2); }
-  .discord .discord-fine { font-size: 15px; color: #bdb4a2; margin: 0 0 14px; }
-  .discord .btn { width: 100%; max-width: 360px; text-transform: none; letter-spacing: .01em; font-size: 17px; }
+  /* discord step */
+  #discord-step .btn { text-transform: none; letter-spacing: .01em; font-size: 17px; text-align: center; }
+  #discord-step .btn-wrap { margin-top: 12px; }
+  #discord-step .discord-fine { font-size: 15px; color: #bdb4a2; margin: 10px 0 0; }
+  @media (max-width: 939px) { #discord-step .btn { width: 100%; } }
   .legal-line { font-size: 17px; color: var(--cream2); margin: 22px auto 0; max-width: 680px; }
   .legal-line a { color: var(--g); }
 
@@ -116,9 +115,9 @@
     .mocks { grid-template-columns: 300px 1fr; gap: 48px; justify-items: stretch; margin: 44px 0 52px; order: 1; }
     .mock-wrap.mail-wrap { display: flex; }
     .mock-wrap .phone { max-width: 300px; }
-    main.ty .steps { margin-top: 0; max-width: 920px; width: 100%; align-self: center; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+    main.ty .steps { margin-top: 0; max-width: 1000px; width: 100%; align-self: center; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
     .mock-wrap:last-child .laptop { margin: 0 auto; }
-    .steps, .discord, .legal-line, .bigcta, .micro, .help, .note { order: 2; }
+    .steps, .legal-line, .bigcta, .micro, .help, .note { order: 2; }
     .steps li { display: block; padding: 28px 22px; text-align: center; }
     .steps .ico { margin: 0 auto 18px; }
     .steps .btns { justify-content: center; }
@@ -131,7 +130,7 @@
   <svg class="check" viewBox="0 0 96 96" role="img" aria-label="Seat saved"><circle cx="48" cy="48" r="43" fill="#2a2623" stroke="#f2b136" stroke-width="4"/><path d="M28 50 l14 14 l27 -30" fill="none" stroke="#f2b136" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <h1 id="headline">You're in!</h1>
   <p class="sub">Your seat for Max's free live masterclass is saved.</p>
-  <p class="support">Two quick steps so you don't miss it.</p>
+  <p class="support">Three quick steps to get ready. Step 2 is optional.</p>
 
   <div class="event">
     <p><strong>How to Get Paid by Brands to Make Videos From Your Phone</strong></p>
@@ -152,6 +151,15 @@
         <p class="soon" id="cal-soon" hidden>Calendar link coming soon</p>
       </div>
     </li>
+    <li id="discord-step">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg></div>
+      <div>
+        <h2>Optional: Join Max's Discord.</h2>
+        <p>You may need a free Discord account first. It isn't needed to attend and has no effect on giveaway entry.</p>
+        <div class="btn-wrap"><a class="btn ghost" id="discord-link" href="#" target="_blank" rel="noopener noreferrer">Join Max's Discord (free)</a></div>
+        <p class="discord-fine">Discord is a separate service with its own terms and privacy policy.</p>
+      </div>
+    </li>
     <li id="live-step">
       <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></div>
       <div>
@@ -160,13 +168,6 @@
       </div>
     </li>
   </ol>
-
-  <section class="discord" aria-labelledby="discord-h">
-    <h2 id="discord-h">Optional: Max's free Discord</h2>
-    <p>Max posts in his community there. Join on your phone or computer. You may need to create a free Discord account first. Joining is optional. It isn't needed to attend the masterclass and has no effect on giveaway entry.</p>
-    <p class="discord-fine">Discord is a separate service with its own terms and privacy policy.</p>
-    <a class="btn ghost" href="https://discord.gg/5nrxfj6KHm" target="_blank" rel="noopener noreferrer">Join Max's Discord (free)</a>
-  </section>
 
 
   <div class="mocks">
@@ -222,6 +223,7 @@
   const ADDEVENT_URL = 'https://www.addevent.com/event/tgmzbf8gb41f';         // AddEvent event link. Empty = calendar button shows disabled.
   const DAY_DATE_TEXT = 'Friday, October 23, 2026 · 6:00 PM CT';   // event strip
   const RULES_URL = ''; // Official Rules link. Empty = link stays a placeholder.
+  const DISCORD_URL = 'https://discord.gg/5nrxfj6KHm'; // Max's Discord invite. Swap in the event link (?event=) later.
   const SMS_DATE_TEXT = 'Oct 23, 2026 at 6 PM CT'; // phone mockup, must match the real confirmation text
 
   document.querySelectorAll('.day-date').forEach((el) => { el.textContent = DAY_DATE_TEXT; });
@@ -237,6 +239,8 @@
     // Show the registrant's own name in the phone and email mockups (default: Jane).
     document.querySelectorAll('.mock-name, .mock-name-caps').forEach((el) => { el.textContent = n; });
   }
+
+  document.getElementById('discord-link').href = DISCORD_URL;
 
   if (RULES_URL) {
     const rl = document.getElementById('rules-link');
