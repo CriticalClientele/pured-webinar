@@ -86,6 +86,12 @@
     #cal-step .btns { flex-direction: column; }
     #cal-step .btn { flex: none; width: 100%; }
   }
+  /* optional discord */
+  .discord { width: 100%; max-width: 640px; margin: 24px auto 0; border: 1px solid rgba(255,249,238,.18); border-radius: 12px; padding: 20px; text-align: center; background: rgba(255,249,238,.03); }
+  .discord h2 { font-size: 22px; line-height: 1.25; margin: 0 0 8px; color: var(--cream); }
+  .discord p { margin: 0 0 8px; font-size: 18px; color: var(--cream2); }
+  .discord .discord-fine { font-size: 15px; color: #bdb4a2; margin: 0 0 14px; }
+  .discord .btn { width: 100%; max-width: 360px; text-transform: none; letter-spacing: .01em; font-size: 17px; }
   .legal-line { font-size: 17px; color: var(--cream2); margin: 22px auto 0; max-width: 680px; }
   .legal-line a { color: var(--g); }
 
@@ -112,7 +118,7 @@
     .mock-wrap .phone { max-width: 300px; }
     main.ty .steps { margin-top: 0; max-width: 920px; width: 100%; align-self: center; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
     .mock-wrap:last-child .laptop { margin: 0 auto; }
-    .steps, .legal-line, .bigcta, .micro, .help, .note { order: 2; }
+    .steps, .discord, .legal-line, .bigcta, .micro, .help, .note { order: 2; }
     .steps li { display: block; padding: 28px 22px; text-align: center; }
     .steps .ico { margin: 0 auto 18px; }
     .steps .btns { justify-content: center; }
@@ -154,6 +160,13 @@
       </div>
     </li>
   </ol>
+
+  <section class="discord" aria-labelledby="discord-h">
+    <h2 id="discord-h">Optional: Max's free Discord</h2>
+    <p>Max posts in his community there. Join on your phone or computer. You may need to create a free Discord account first. Joining is optional. It isn't needed to attend the masterclass and has no effect on giveaway entry.</p>
+    <p class="discord-fine">Discord is a separate service with its own terms and privacy policy.</p>
+    <a class="btn ghost" href="https://discord.gg/5nrxfj6KHm" target="_blank" rel="noopener noreferrer">Join Max's Discord (free)</a>
+  </section>
 
 
   <div class="mocks">
