@@ -33,8 +33,7 @@
 
   /* mockups */
   main.ty { display: flex; flex-direction: column; }
-  .mocks { display: grid; grid-template-columns: 1fr; gap: 36px; margin: 48px 0 0; justify-items: center; align-items: start; }
-  .mock-wrap.mail-wrap { display: none; }
+  .mocks { display: grid; grid-template-columns: 1fr; gap: 36px; margin: 28px 0 0; justify-items: center; align-items: start; }
   .mock-wrap .phone { max-width: 270px; }
   .mock-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
   .mock-label { font-size: 17px; font-weight: 600; color: var(--g); margin: 0 0 14px; line-height: 1.35; }
@@ -112,7 +111,6 @@
   }
   @media (min-width: 940px) {
     .mocks { grid-template-columns: 300px 1fr; gap: 48px; justify-items: stretch; margin: 44px 0 52px; order: 1; }
-    .mock-wrap.mail-wrap { display: flex; }
     .mock-wrap .phone { max-width: 300px; }
     main.ty .steps { margin-top: 0; max-width: 1000px; width: 100%; align-self: center; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
     .mock-wrap:last-child .laptop { margin: 0 auto; }
@@ -134,6 +132,35 @@
   <div class="event">
     <p><strong>How to Get Paid by Brands to Make Videos From Your Phone</strong></p>
     <p class="when"><span class="day-date">Friday, October 23, 2026 · 6:00 PM CT</span> · Live on Zoom</p>
+  </div>
+
+  <div class="mocks">
+    <div class="mock-wrap">
+      <p class="mock-label">In your texts</p>
+      <div class="phone" aria-label="Example text message">
+        <div class="phone-in">
+          <div class="p-status"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
+          <div class="p-head"><div class="avatar">P</div><small>Pured Media</small></div>
+          <div class="bubble">Pured Media: Hi <span class="mock-name">Jane</span>, your seat is saved for Max's live class <span class="sms-date">Oct 23, 2026 at 6 PM CT / 7 PM ET</span>. Link is in your email. Reply STOP to opt out.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mock-wrap mail-wrap">
+      <p class="mock-label">In your email</p>
+      <div class="laptop" aria-label="Example email">
+        <div class="screen"><div class="screen-in">
+          <div class="tools"><i></i><i></i><i></i><i></i></div>
+          <div class="subject">You're in. Here is your link for my free class <span class="tag">Inbox</span></div>
+          <div class="from"><div class="avatar">M</div><div>Max, Pured Media<small>to me</small></div></div>
+          <div class="mail-body">
+            <b class="big">YOU'RE IN, <span class="mock-name-caps">Jane</span>!</b>
+            Your seat is saved for my free live masterclass:<br>
+            <b>How to Get Paid by Brands to Make Videos From Your Phone</b>
+          </div>
+        </div></div>
+        <div class="base"></div>
+      </div>
+    </div>
   </div>
 
   <ol class="steps">
@@ -169,34 +196,6 @@
   </ol>
 
 
-  <div class="mocks">
-    <div class="mock-wrap">
-      <p class="mock-label">In your texts</p>
-      <div class="phone" aria-label="Example text message">
-        <div class="phone-in">
-          <div class="p-status"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
-          <div class="p-head"><div class="avatar">P</div><small>Pured Media</small></div>
-          <div class="bubble">Pured Media: Hi <span class="mock-name">Jane</span>, your seat is saved for Max's live class <span class="sms-date">Oct 23, 2026 at 6 PM CT</span>. Link is in your email.</div>
-        </div>
-      </div>
-    </div>
-    <div class="mock-wrap mail-wrap">
-      <p class="mock-label">In your email</p>
-      <div class="laptop" aria-label="Example email">
-        <div class="screen"><div class="screen-in">
-          <div class="tools"><i></i><i></i><i></i><i></i></div>
-          <div class="subject">You're in. Here is your link for my free class <span class="tag">Inbox</span></div>
-          <div class="from"><div class="avatar">M</div><div>Max, Pured Media<small>to me</small></div></div>
-          <div class="mail-body">
-            <b class="big">YOU'RE IN, <span class="mock-name-caps">Jane</span>!</b>
-            Your seat is saved for my free live masterclass:<br>
-            <b>How to Get Paid by Brands to Make Videos From Your Phone</b>
-          </div>
-        </div></div>
-        <div class="base"></div>
-      </div>
-    </div>
-  </div>
 
 
   <section class="help" aria-labelledby="help-h">
@@ -223,7 +222,7 @@
   const DAY_DATE_TEXT = 'Friday, October 23, 2026 · 6:00 PM CT';   // event strip
   const RULES_URL = 'official-rules.html'; // Official Rules page.
   const DISCORD_URL = 'https://discord.gg/5nrxfj6KHm'; // Max's Discord invite. Swap in the event link (?event=) later.
-  const SMS_DATE_TEXT = 'Oct 23, 2026 at 6 PM CT'; // phone mockup, must match the real confirmation text
+  const SMS_DATE_TEXT = 'Oct 23, 2026 at 6 PM CT / 7 PM ET'; // phone mockup, must match the real confirmation text
 
   document.querySelectorAll('.day-date').forEach((el) => { el.textContent = DAY_DATE_TEXT; });
   document.querySelectorAll('.sms-date').forEach((el) => { el.textContent = SMS_DATE_TEXT; });
