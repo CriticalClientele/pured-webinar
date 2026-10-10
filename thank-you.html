@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- DO NOT DEPLOY until [PRIZE] is filled, the placeholders in official-rules.html are filled, and the lawyer signs off on the Official Rules (then compliance re-reviews the final giveaway text). -->
+<!-- DO NOT DEPLOY until the placeholders in official-rules.html are filled and the lawyer signs off on the Official Rules (then compliance re-reviews the final giveaway text). -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -164,7 +164,7 @@
       <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></div>
       <div>
         <h2>Be live to win.</h2>
-        <p class="fine">Max draws a winner live on Zoom at 7:00 PM CT and reads their Discord username. Reply in the Zoom chat within 5 minutes, or he draws again. Prize: [PRIZE]. No purchase necessary. <a id="rules-link" href="official-rules.html">Official Rules</a>.</p>
+        <p class="fine">To enter, join Max's Discord and tap "Interested" on the Oct 23 class event by Thursday, Oct 22, 11:59 PM CT. Max draws 3 winners live on Zoom on Friday, Oct 23 at 7:00 PM CT and reads each winner's Discord username aloud. Each winner picks one prize from the prizes still available: an iPhone, two 1-on-1 video calls with Max, a spa day gift card, a Shark vacuum, or a coffee machine. Reply in the Zoom chat within 5 minutes, or he draws another name. No purchase necessary. <a id="rules-link" href="official-rules.html">Official Rules</a>.</p>
       </div>
     </li>
   </ol>
@@ -229,7 +229,7 @@
   document.querySelectorAll('.day-date').forEach((el) => { el.textContent = DAY_DATE_TEXT; });
   document.querySelectorAll('.sms-date').forEach((el) => { el.textContent = SMS_DATE_TEXT; });
 
-  if (DAY_DATE_TEXT.includes('[') || SMS_DATE_TEXT.includes('[') || !ADDEVENT_URL || !RULES_URL || document.body.textContent.includes('[PRIZE]')) console.warn('thank-you: placeholders not filled');
+  if (DAY_DATE_TEXT.includes('[') || SMS_DATE_TEXT.includes('[') || !ADDEVENT_URL || !RULES_URL) console.warn('thank-you: placeholders not filled');
 
   // Greet by first name if the form passed it (?n=Caiden).
   const name = new URLSearchParams(location.search).get('n');
