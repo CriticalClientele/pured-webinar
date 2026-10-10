@@ -121,9 +121,9 @@ details[open] .faq-icon{transform:rotate(45deg);}
 <input autocomplete="off" id="nickname_hp" name="nickname_hp" tabindex="-1" type="text"/>
 </div>
 <div class="flex items-start gap-3 pt-1">
-<input class="mt-1 h-5 w-5 rounded bg-surface cursor-pointer shrink-0 accent-secondary" id="sms-consent" name="sms_consent" type="checkbox"/>
+<input class="mt-1 h-5 w-5 rounded bg-surface cursor-pointer shrink-0 accent-secondary" id="sms-consent" name="sms_consent" required="" type="checkbox"/>
 <label class="font-label-sm text-label-sm text-on-surface-variant leading-relaxed cursor-pointer select-none" for="sms-consent">
-                  Text me masterclass reminders from Pured Media. Up to 3 msgs/week. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. Not required to register or buy. <a class="underline" href="terms.html">Terms</a> · <a class="underline" href="privacy.html">Privacy</a>
+                  Text me masterclass reminders from Pured Media. Up to 3 msgs/week (US and Canada numbers only). Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. <a class="underline" href="terms.html">Terms</a> · <a class="underline" href="privacy.html">Privacy</a>
                 </label>
 </div>
 <button class="cta-shake-desktop w-full min-h-[58px] px-8 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-fixed-dim transition-colors rounded-lg font-label-lg text-label-lg tracking-wide uppercase font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-sm active:translate-y-0.5" type="submit">
@@ -430,7 +430,7 @@ details[open] .faq-icon{transform:rotate(45deg);}
       country_tag: ['US', 'CA'].includes(phoneCountry) ? 'us-ca' : 'international',
       sms_consent: consent ? 'yes' : 'no',
       sms_consent_text: consent ? CONSENT_TEXT : '',
-      consent_version: '2026-10-v2',
+      consent_version: '2026-10-v3',
       consent_timestamp: new Date().toISOString(),
       user_agent: navigator.userAgent,
       page_url: location.href,
