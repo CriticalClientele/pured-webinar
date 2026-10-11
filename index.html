@@ -331,6 +331,65 @@ details[open] .faq-icon{transform:rotate(45deg);}
   const THANK_YOU_URL = 'thank-you.html';
   const CONSENT_TEXT = document.querySelector('label[for="sms-consent"]').textContent.trim();
 
+  // Registration source: explicit ?src= / utm_source wins, else the referrer's host, else 'direct'.
+  // Kept in localStorage so a visit to the FAQ and back doesn't re-attribute. Storage failures fall back to this page view.
+  function detectSource(href, referrer, store) {
+    const clean = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 30);
+    const is = (h, d) => h === d || h.endsWith('.' + d);
+    let params;
+    try { params = new URL(href).searchParams; } catch (err) { params = new URLSearchParams(); }
+    const rawTag = params.get('src') || params.get('utm_source') || '';
+    const tag = clean(params.get('src')) || clean(params.get('utm_source'));
+
+    let host = '';
+    try {
+      const u = new URL(referrer);
+      if (/^https?:$/.test(u.protocol)) host = u.hostname.toLowerCase().replace(/^www\./, '');
+    } catch (err) { /* no referrer */ }
+    let curHost = '';
+    try { curHost = new URL(href).hostname.toLowerCase(); } catch (err) { /* ignore */ }
+    // Our own pages (live site, previews of this project, branded domain) are not a source.
+    const isSelf = host && (host === curHost || /^pured-(webinar|media-masterclass)(-[a-z0-9-]+)?\.vercel\.app$/.test(host) || is(host, 'masterclass.puredmedia.com'));
+
+    let source = '';
+    let detail = '';
+    let explicit = false;
+    if (tag) {
+      source = tag;
+      detail = rawTag.slice(0, 100);
+      explicit = true;
+    } else if (host && !isSelf) {
+      detail = host;
+      if (['mail.google.com', 'outlook.live.com', 'outlook.office.com', 'mail.yahoo.com', 'kit.com', 'ck.page'].some((d) => is(host, d)) || /(^|\.)convertkit[a-z0-9-]*\./.test(host)) source = 'email';
+      else if (is(host, 'instagram.com')) source = 'instagram';
+      else if (['facebook.com', 'fb.me'].some((d) => is(host, d))) source = 'facebook';
+      else if (['t.co', 'x.com', 'twitter.com'].some((d) => is(host, d))) source = 'x';
+      else if (is(host, 'tiktok.com')) source = 'tiktok';
+      else if (is(host, 'youtube.com') || is(host, 'youtu.be')) source = 'youtube';
+      else if (/(^|\.)google\.[a-z.]+$/.test(host)) source = 'google';
+      else if (is(host, 'bing.com')) source = 'bing';
+      else if (is(host, 'discord.com') || is(host, 'discordapp.com')) source = 'discord';
+      else if (is(host, 'threads.net')) source = 'threads';
+      else if (/(^|\.)pinterest\./.test(host)) source = 'pinterest';
+      else if (/(^|\.)linkedin\./.test(host) || is(host, 'lnkd.in')) source = 'linkedin';
+      else source = host;
+    }
+
+    let saved = null;
+    try { saved = JSON.parse(store.getItem('pm_source')); } catch (err) { saved = null; }
+    if (saved && typeof saved.source !== 'string') saved = null;
+
+    const found = { source: source, detail: detail, landing: href };
+    // Explicit tag always overwrites; an auto-detected value only fills an empty slot; self/direct never writes.
+    if (source && (explicit || !saved)) {
+      try { store.setItem('pm_source', JSON.stringify(found)); } catch (err) { /* use this page view's value */ }
+      return found;
+    }
+    if (saved && saved.source) return { source: saved.source, detail: saved.detail || '', landing: saved.landing || href };
+    return { source: 'direct', detail: '', landing: href };
+  }
+  const SOURCE = detectSource(location.href, document.referrer, (() => { try { return window.localStorage; } catch (err) { return null; } })());
+
   // Phone: country picker + real number-format check (libphonenumber via intl-tel-input). Defaults to US.
   const iti = window.intlTelInput(document.getElementById('phone'), {
     initialCountry: 'us',
@@ -434,6 +493,9 @@ details[open] .faq-icon{transform:rotate(45deg);}
       consent_timestamp: new Date().toISOString(),
       user_agent: navigator.userAgent,
       page_url: location.href,
+      source: SOURCE.source,
+      source_detail: SOURCE.detail,
+      landing_url: SOURCE.landing,
       webinar: '2026-10-23 Zoom 6PM CT',
       tag: 'webinar-oct-2026',
       hp: form.nickname_hp.value.trim()
