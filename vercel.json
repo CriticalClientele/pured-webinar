@@ -4,6 +4,11 @@
       "source": "/live",
       "destination": "https://us06web.zoom.us/j/84644892155",
       "permanent": false
+    },
+    {
+      "source": "/sms",
+      "destination": "/?utm_source=sms",
+      "permanent": false
     }
   ]
 }
